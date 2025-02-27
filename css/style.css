@@ -1,0 +1,175 @@
+body { 
+    margin: 0; 
+    overflow: hidden; 
+    background-color: #111112;
+    color: aliceblue;
+}
+.container { 
+    position: relative; 
+    width: 100vw; 
+    height: 100vh; 
+}
+canvas { display: block; } 
+.overlay {
+    position: absolute;
+    width: 30vw;
+    height: 97%;
+    /* top: 25px; */
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-left: 25px;
+    background: #161618f0;
+    padding: 13px;
+    border-radius: 25px;
+    border-style: solid;
+}
+
+.user-profile{
+    display: flex;
+    flex-direction: row;
+    gap:2px;
+    justify-content: space-between;
+    border-radius: 10px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+}
+.user-profile:hover{
+    background-color: #1e1e21;
+}
+.user-profile:active{
+    transform: scale(0.85);
+}
+
+.user-profile .left{
+    display: flex;
+    gap: 15px;
+}
+.user-det .name{
+    font-size: 18px;
+    padding-top: 5px;
+}
+.user-det .user-title{
+    font-size: 14px;
+    color: #ffffff7b;
+}
+
+
+.profile-pic{
+    
+}
+.profile-pic img{
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.user-det{
+    border-style: solid;
+}
+.btn{
+    width: 35px;
+    height: 35px;
+    align-content: center;
+    border-style: solid;
+}
+.model-views{
+   height: 300px;
+   border-style: solid;
+   background-color: #1e1e21;
+   border-color: aliceblue;
+   border-radius: 10px;
+   margin-top: 10px;
+   display: flex;
+   justify-content: space-between;
+}
+.main-model-view{
+    width: 75%;
+    height: 100%;
+    border-style: solid;
+}
+.main-model-view img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+.other-views{
+    width: 23%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: scroll;
+    border-style: solid;
+    border-color: aliceblue;
+}
+.other-views img{
+    width: auto;
+    height: 55px;
+    object-fit: cover;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: aliceblue;
+    margin-top: 5px;
+    cursor: pointer;
+    transition-duration: 0.5s;
+}
+.other-views img:hover{
+    opacity: 0.7;
+}
+.other-views img:hover{
+    filter: saturate(1.4);
+}
+
+.project-det{
+    margin-top: 2px;
+}
+.project-name{
+    font-size: 18px;
+    font-weight: 700;
+}
+.project-det{
+    color: #d0d2d3;
+    font-size: 14px;
+}
+
+.btns{
+    width: 0%;
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    bottom: 15px;
+    gap: 5px;
+    background-color: #1e1e21;
+}
+.save-btn{
+    border-style: hidden;
+}
+.btns .interested{
+    width: 100%;
+    height: auto;
+    background-color: #3b29ff;
+    color: aliceblue;
+    border-radius: 5px;
+    border-style: hidden;
+    padding: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
