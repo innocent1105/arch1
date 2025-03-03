@@ -1,11 +1,13 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
-import { MTLLoader } from 'three/examples/jsm/loaders/MTLLoader.js';
-import { FBXLoader } from 'three/examples/jsm/loaders/FBXLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+// import * as THREE from 'https://unpkg.com/three@latest/build/three.module.js';
+// import { WebGPURenderer } from 'https://unpkg.com/three@latest/examples/jsm/renderers/WebGPURenderer.js';
 
 // components
+let model_name = document.getElementById("model-name").value;
+console.log(model_name)
 let modelContainer = document.getElementById("container");
 // Scene, Camera, Renderer
 const scene = new THREE.Scene();
@@ -15,7 +17,7 @@ const camera = new THREE.PerspectiveCamera(
   0.1,
   1000
 );
-camera.position.set(0, 15, 15);
+camera.position.set(0, 15, 15); 
 
 // // GLTF Model Loader
 const loader = new GLTFLoader();
@@ -26,13 +28,13 @@ const loader = new GLTFLoader();
 
 loader.setPath('./models')
 
-loader.load("/old_kings_head.glb", function ( gltf ) {
-    carModel = gltf.scene.children[ 0 ];
+loader.load("/" + model_name, function ( gltf ) {
+    Model = gltf.scene.children[ 0 ];
     // flamingoMesh.rotation.y = -15;
-    carModel.position.set(0,1, 4);
-    scene.add(carModel);
-    carModel.scale.set(1, 1, 1);
-    scene.add(carModel);
+    Model.position.set(0,0, 4);
+    scene.add(Model);
+    Model.scale.set(1, 1, 1);
+    scene.add(Model);
 } );
 
 
@@ -92,3 +94,11 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+
+
+
+
+
+
+

@@ -1,0 +1,19 @@
+{
+  "name": "arch",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "source": "index.html",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "three": "^0.173.0"
+  },
+  "description": "",
+  "devDependencies": {
+    "vite": "^6.1.1"
+  }
+}

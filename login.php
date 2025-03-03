@@ -1,3 +1,79 @@
+<?php
+    session_start();
+        
+    include("./connection.php");
+    include("./functions.php");
+    
+
+    $error_response = "";
+
+     // $error_response = "";
+     if(isset($_GET['error'])){
+        $error_response = $_GET['error'];
+        if($error_response == "'1'"){
+            $error_response = '
+            <div class="error-msg w-full p-2 border border-red-500 text-red-500 text-xs rounded">
+                Please fill in all the fields.
+            </div>
+        ';
+        }else if($error_response == "'2'"){
+            $error_response = '
+            <div class="error-msg w-full p-2 border border-red-500 text-red-500 text-xs rounded">
+                Unregistered user.
+            </div>
+        ';
+        }else if($error_response == "'3'"){
+            $error_response = '
+            <div class="error-msg w-full p-2 border border-red-500 text-red-500 text-xs rounded">
+                Incorrect password.
+            </div>
+        ';
+        }else{
+            $error_response = '
+                <div class="error-msg w-full p-2 border border-red-500 text-red-500 text-xs rounded">
+                    Unknown error occurred
+                </div>
+            ';
+        }
+    }else{
+        $error_response = "";
+    }
+
+    if($_SERVER['REQUEST_METHOD'] == "POST"){
+        // form submitted
+
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        if(!empty($username) && !empty($password)){
+            // read from db
+            // $user_id = random_num(10000000);
+            $query = "select * from users where username = '$username' limit 1"; 
+            $result = mysqli_query($con, $query);
+            if($result){
+                if($result && mysqli_num_rows($result) > 0 ){
+                    $user_data = mysqli_fetch_assoc($result);
+                    // return $user_data;
+                    if(password_verify($password ,$user_data['password'])){
+                        $_SESSION['user_id'] = $user_data['user_id'];
+                        setcookie("xr", $user_data['user_id'], time() + (86400 * 30), "/");
+                        header("Location: ./index.php");
+                        // echo "logged in";
+                        die;
+                    }else{
+                        header("Location: ./login.php?error='3'");
+                    }
+                }else{
+                    header("Location: ./login.php?error='2'");
+                }
+            }
+        }else{
+            header("Location: ./login.php?error='1'");
+        }
+    }
+
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +114,7 @@
         </div>
 
         <div class="mobile-bottom-bar">
-            <div class="user-details w-full  p-2">
+            <div id="user-tab" class="user-details w-full  p-2">
                 <div class="mobile-user ">
                     <div class="user-left">
                         <img src="./images/pri.jpg" class="border border-gray-700" alt="">
@@ -71,7 +147,16 @@
                 </div>
             </div>
         </div>
-
+        
+        <?php if($error_response != ""){
+            ?>
+            <div id="login-box" class="login-box p-2 pt-48 flex w-full">
+            <?php include "./components/login.php"; ?>
+        </div>
+        <?php }?>
+        <div id="login-box" class="login-box p-2 pt-48 hidden w-full">
+            <?php include "./components/login.php"; ?>
+        </div>
         <div class="overlay">
             <div class="user-profile w-full p-4">
                 <div class="left"> 
@@ -106,13 +191,44 @@
                 <div class="project-det">A street bar, incomplete and neglected.</div>
             </div>
 
-            <div class="btns px-4">
+            <div id="btns-4" class="btns px-4">
                 <button class="save-btn w-1/3">save</button>
                 <button class="interested">Interested</button>
             </div>
         </div>
     </div>
-    
     <script type="module" src="main.js"></script>
+    <script>
+        let loginTabOpened = false;
+        let loginTab = document.getElementById("login-box");
+        let userTab = document.getElementById("user-tab");
+        let Btns = document.getElementById("btns-4");
+        function loginBox(){
+            if(loginTabOpened){
+                loginTab.classList.remove("flex");
+                loginTab.classList.add("hidden");
+                loginTabOpened = false;
+            }else{
+                loginTab.classList.remove("hidden");
+                loginTab.classList.add("flex");
+                loginTabOpened = true;
+            }
+            console.log(loginTabOpened)
+        }
+        userTab.addEventListener("click", ()=>{
+          loginBox();
+        })
+
+        Btns.addEventListener("click", ()=>{
+            loginBox();
+        })
+
+
+    </script>
+
+
+
+
+
 </body>
 </html>

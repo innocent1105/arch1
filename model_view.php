@@ -1,3 +1,19 @@
+<?php 
+	require("header.php");
+	$user_data = check_login($con);
+
+    $response_msg = "";
+
+    if(isset($_GET['id'])){
+        $model_id = $_GET['id'];
+        echo $model_id;
+    }else{
+
+    }
+   
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +27,7 @@
        
     </style>
 </head>
-<body>
+<body><input type="text" id="model-name" class=" hidden" value="<?php echo $model_id ?>">
     <div class="container" id="container">
         <div class="mobile-top-bar">
             <!-- <div class="search-section">
@@ -113,6 +129,19 @@
         </div>
     </div>
     
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.172.0/three.tsl.js" type="module"></script> -->
+    <!-- <script src="http://threejs.org/build/three.min.js" type="module"></script> -->
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://cdn.jsdelivr.net/npm/three@latest/build/three.module.js",
+                "three/addons/": "https://cdn.jsdelivr.net/npm/three@latest/examples/jsm/"
+            }
+        }
+    </script>
+
+
     <script type="module" src="main.js"></script>
 </body>
 </html>
