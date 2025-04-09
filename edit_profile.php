@@ -1,0 +1,162 @@
+<?php 
+	require("header.php");
+	$user_data = check_login($con);
+    $user_id = $user_data['user_id'];
+    $user_name = $user_data['username'];
+    $user_pp = $user_data['pp'];
+
+    if(isset($_GET['id'])){
+        $other_user_id = $_GET['id'];
+        $qry = "select * from users where user_id = '$other_user_id'";
+        $result = mysqli_query($con, $qry);
+        if($result -> num_rows > 0){
+            while($row = $result->fetch_assoc()){
+                $other_user_name = $row['username'];
+                $other_user_pp = $row['pp'];
+            }
+        }
+    }
+    // echo $user_id;
+
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realism Studio</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tailwind.css">
+    <link rel="stylesheet" href="css/icons.css">
+    <style>
+       
+    </style>
+</head>
+<body class="chat-body">
+    <input type="text" id="user-id" class="hidden" value="<?php echo $user_id ?>">
+    <input type="text" id="other-user-id" class="hidden" value="<?php echo $other_user_id ?>">
+
+    <!-- <?php include "./loading.php" ?> -->
+    <?php include "./components/top-nav.php" ?>
+    
+    <div class="profile">
+    <div class="header mt-16 mb-2 text-lg font-medium p-2">Edit profile</div> 
+
+        <div class="profile-picture-area px-3 pt-4 pb-2 w-full ">
+            <img class=" w-12 h-12 rounded-full border border-blue-700 object-fit-cover" src="./profile_pictures/<?php echo $user_pp; ?>" alt="">
+            <!-- <div class="upload-image border p-1 w-10 h-10 flex justify-center rounded-full">
+                <i class="si-camera"></i>
+            </div> -->
+            <div class="user-name mt-2 font-medium text-md">
+                <label for="username">Username</label>
+                <input type="text" class="w-full rounded-lg p-2 bg-gray-900" value="<?php echo $user_name;?>">
+                <div class="user-type font-light text-sm text-gray-400">
+                    <?php echo $user_data['account_type'] ?>
+                </div>
+            </div>
+        </div>
+
+        <div class="about-user m-2 p-2">
+            <div class="det w-full mt-1 flex gap-2">
+                <i class="si-message"></i>
+                <div class=" text-sm text-gray-500">
+                    <?php 
+                        if(empty($user_data['email'])){
+                            echo "  Add email address";
+                        }else{
+                            echo $user_data['email'];
+                        }
+                    ?>
+                </div>
+            </div>
+
+            <div class="det w-full mt-1 flex gap-2">
+                <i class="si-address-book"></i>
+                <div class=" text-sm text-gray-500">
+                    <?php 
+                        if(empty($user_data['phone_number'])){
+                            echo " Add phone number";
+                        }else{
+                            echo $user_data['phone_number'];
+                        }
+                    ?>
+                </div>
+            </div>
+            
+            <div class="det w-full mt-1 flex gap-2">
+                <i class="si-map"></i>
+                <div class=" text-sm text-gray-500">
+                    <?php 
+                        if(empty($user_data['country'])){
+                            echo " - ";
+                        }else{
+                            echo $user_data['country'];
+                        }
+                    ?>
+                </div>
+            </div>
+
+            <div class="det w-full mt-1 flex gap-2">
+                <i class="si-location"></i>
+                <div class=" text-sm text-gray-500">
+                    <?php 
+                        if(empty($user_data['city'])){
+                            echo " - ";
+                        }else{
+                            echo $user_data['city'];
+                        }
+                    ?>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    
+    <div class="mobile-bottom-bar bottom-0">
+        <?php include "./bottom_nav.php" ?>
+    </div>
+
+    <script src="./js/jquery.js"></script>
+    <script>
+     
+        // window.onload = function(){
+        //     stopLoading();
+        // }
+ 
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

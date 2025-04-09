@@ -42,18 +42,18 @@ session_start();
 			$query = "select * from users where username = '$username' limit 1";
 			$result = mysqli_query($con, $query);
 
-			if($result){
-				if($result && mysqli_num_rows($result) > 0){
-					$user_data = mysqli_fetch_assoc($result);
-					if(password_verify($password ,$user_data['password'])){
+			if($result -> num_rows > 0){
+                while($user_data = $result->fetch_assoc()){
+                    if(password_verify($password ,$user_data['password'])){
 						$_SESSION['user_id'] =  $user_data['user_id'];
 						setcookie("xr", $user_data['user_id'], time() + (86400 * 30), "/");
 						header("Location: index.php");
-						// die;
-					}
-				}
-			}   $error = "error-2";
-			    header("Location: login2.php?error='$error'");
+						die;
+					} 
+                }
+			}
+            $error = "error-2";
+            header("Location: login2.php?error='$error'");
 		}else{
             $error = "error-1";
 			header("Location: login2.php?error='$error'");
@@ -66,7 +66,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Three</title>
+    <title>Realism Studio</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tailwind.css">
     <link rel="stylesheet" href="css/icons.css">
@@ -75,8 +75,17 @@ session_start();
     </style>
 </head>
     <body>
-        <div id="login-box" class="login-box p-2 pt-48 flex w-full">
-            <?php include "./components/login.php"; ?>
-        </div>
+        <?php include "./loading.php" ?>
+        <?php include "./components/top-nav.php" ?>
+            <div id="login-box" class="login-box p-2 pt-48 flex w-full">
+                <?php include "./components/login.php"; ?>
+            </div>
+
+            
+        <script>
+            window.onload = function(){
+                stopLoading();
+            }
+        </script>
     </body>
 </html>

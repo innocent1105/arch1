@@ -1,12 +1,13 @@
 <?php 
 	require("header.php");
 	$user_data = check_login($con);
+	header("Location: ./model_view.php");
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My website</title>
+	<title>Realism Studio</title>
 </head>
 <body>
 

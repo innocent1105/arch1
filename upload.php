@@ -46,10 +46,10 @@
                                                 // echo "File $filename failed.<br>";
                                             }
                                         }else{
-                                            header("Location: upload_model.php?response= failed to upload images : unsupported format");
+                                            header("Location: upload.php?response= failed to upload images : unsupported format");
                                         }
                                     }else{
-                                        header("Location: upload_model.php?response= failed to upload images : an error occuured");
+                                        header("Location: upload.php?response= failed to upload images : an error occuured");
                                     }
                                 }
                                 
@@ -60,27 +60,27 @@
                                     // $encrepted_model_name = password_hash($new_model_name, true);
                                     header("Location: model_view.php?id=". $new_model_name. "");
                                 }else{
-                                    header("Location: upload_model.php?response=Error : an error occured, please try again.");
+                                    header("Location: upload.php?response=Error : an error occured, please try again.");
                                 }
                             }else{
-                                header("Location: upload_model.php?response=Failed to upload : no images selected.");
+                                header("Location: upload.php?response=Failed to upload : no images selected.");
                             }
 
 
                         }else{
-                            header("Location: upload_model.php?response=Error : Unsupported model format - select glb files only.");
+                            header("Location: upload.php?response=Error : Unsupported model format - select glb files only.");
                         }
                     }else{
-                        header("Location: upload_model.php?response=Error : an error occured while uploading the model, please try again.");
+                        header("Location: upload.php?response=Error : an error occured while uploading the model, please try again.");
                     }
                 }else{
-                    header("Location: upload_model.php?response=Please select a 3d model.");
+                    header("Location: upload.php?response=Please select a 3d model.");
                 }
            }else{
-                header("Location: upload_model.php?response=Error : project description can not be empty.");
+                header("Location: upload.php?response=Error : project description can not be empty.");
            }
         }else{
-            header("Location: upload_model.php?response=Error : project name can not be empty.");
+            header("Location: upload.php?response=Error : project name can not be empty.");
         }
     }
 
@@ -104,80 +104,84 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>My website</title>
+	<title>Realism Studio</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/icons.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/tailwind.css">
 </head>
 <body>
-<!-- 
-	<a href="logout.php">Logout</a>
-	<h1>This is the index page</h1>
+    <?php include "./loading.php" ?>
+    <?php include "./components/top-nav.php" ?>
 
-	<br>
-	Hello, <?php echo $user_data['username']; ?>
-
-	<img src="profile_pictures/<?php echo $user_data['pp'] ?>" alt="" width="120px"> -->
-
+    
 
     <div class="mobile-bottom-bar">
         
+        <?php include "./bottom_nav.php" ?>
 
-            <div class="tabs">
-                <div class="icons">
-                    <div class="icon"><i class="si-message"></i></div>
-                    <div class="icon"><i class="si-square"></i></div>
-                    <div class="icon"><i class="si-user-circle"></i></div>
+            
+    </div>
+
+    <div class="flex justify-center">
+        <div class="upload-box p-2 mt-14">
+            <div class="top w-full flex gap-2 my-2">
+                <div class="profile-pic pt-2">
+                    <img class="w-8 h-8 object-fit-cover rounded-full" src="profile_pictures/<?php echo $user_data['pp'] ?>" alt="" width="120px"> 
+                </div>
+                <div class="active-user-det p-2 w-full flex  gap-2 justify-between">
+                    <div class="username text-sm text-gray-300 pt-2"><?php echo $user_data['username'];?></div>
+                    <!-- <div class="user-action-btn p-2 bg-gray-900 rounded hover:bg-gray-700 transition-all"><i class="si-bars "></i></div> -->
+                </div>
+                
+            </div>
+
+            <div class="error-box my-2"><?php echo $response_msg ?></div>
+
+
+        <form action="" method="post" enctype="multipart/form-data">
+        
+            <!-- <label for="project-name" class=" text-sm text-gray-300"></label> -->
+            <input type="text" name="project-name" class="w-full bg-gray-900 rounded-md p-2 transition-all" placeholder="Project name">
+            <textarea name="project-desc" id="" class=" w-full h-36 resize-none rounded-md bg-gray-900 p-2 mt-2 transition-all outline-blue-700" placeholder="Drescribe your project"></textarea>
+            
+            <div class="privacy">
+                <select id="privacy" name="privacy" class=" w-full bg-gray-900 p-2 mt-1 rounded-md cursor-pointer">
+                    <option value="Public" class="p-2">Public</option>
+                    <option value="Private"> Private (Invite only)</option>
+                    <option value="only-me">Only me</option>
+                </select>
+                <div id="privacy-description" class="privacy-description ml-1 text-sm mt-4">
+                    <i class="si-globe"></i> Public - This project can be viewed by everyone.
                 </div>
             </div>
-        </div>
-
-    <div class="box mx-5 my-4 mb-7 flex justify-center">
-        <div class="upload-box border p-4 rounded-lg">
-           <b><div class="header text-2xl text-gray-200 my-4">Upload your 3D model</div></b> 
-           <div class="error-box"><?php echo $response_msg ?></div>
-            <form action="" method="post" class="text-gray-500" enctype="multipart/form-data">
-                <label for="project-name">Project name</label>
-                <input type="text" id="project-name" name="project-name"  class=" p-2 mt-1 bg-gray-900 text-white w-full text-sm transition-all hover:border-blue-500" placeholder="what is your project's name?">
-                <br> <br>
-                <label for="project-desc">Description</label>
-                <input type="text" id="project-name" name="project-desc"  class=" p-2 mt-1 bg-gray-900 text-white w-full text-sm transition-all hover:border-blue-500" placeholder="Describe your project or 3d model.">
             
-                <div class="privacy mt-4 mb-10">
-                    <div class="t">Project privacy settings</div>
-                    <select name="privacy" id="privacy" class=" w-full bg-gray-900 p-2 mt-1 rounded-md cursor-pointer">
-                        <option value="Public" class="p-2">Public</option>
-                        <option value="Private">Private (Invite only)</option>
-                        <option value="only-me">Only me</option>
-                    </select>
-                    <div id="privacy-description" class="privacy-description ml-1 text-sm mt-4">
-                        Public - This project can be viewed by everyone.
-                    </div>
+            <div class="buttons  mt-2  w-full flex justify-between">
+                <div class="left mt-2">
+                    <label for="model" id="model-btn" class="model text-sm w-full bg-gray-900 text-blue-300 rounded p-2 px-5">Select 3d model</label>
+                    <input type="file" name="model" id="model" class="hidden">
                 </div>
-
-                <div class="model mt-10 w-full">
-                    <label for="model" id="model-btn" class=" model-btn w-full text-white rounded-lg shadow-md bg-gray-900 hover:bg-gray-800 transition-all cursor-pointer border border-dashed p-2 px-8">
-                        Select 3d model
+                <div class="right p-2 rounded-md hoverL:bg-gray-900 transition-all">
+                    <label for="pictures" id="files-btn">
+                        <div class="images text-xl rounded-md flex justify-between  cursor-pointer hover:bg-gray-900 text-green-500">
+                            <i class="si-image"></i>
+                            <div id="images-text" class="text text-sm text-green-500">Add images</div>
+                        </div>
                     </label>
-                    <input type="file" id="model" name="model" class=" hidden">
+                    
+                    <input class="hidden" id="pictures" type="file" name="files[]" multiple required>
+    
                 </div>
-                <br><br>
-                <div class="images">
-                <label for="pictures" id="files-btn" class=" model-btn w-full text-white rounded-lg shadow-md bg-gray-900 hover:bg-gray-800 transition-all cursor-pointer border border-dashed p-2 px-8">
-                  Select pictures
-                </label>
-                    <input class="hidden" id="pictures" type="file" name="files[]" multiple>
-                </div>
+            </div> 
 
-                <br><br>
-
-                <input id="button" type="submit" class=" w-full text-white rounded-lg bg-blue-700 transition-all hover:bg-blue-900 py-2 cursor-pointer" value="Publish"><br><br>
+            <div class="new-upload-btn hidden mt-8" id="submit-btn-tab">
+                <input id="button" type="submit" class=" px-8 text-white rounded-lg bg-blue-700 transition-all hover:bg-blue-900 py-2 cursor-pointer" value="Publish"><br><br>
+            </div>
+        </form>   
 
 
 
 
-            </form>
         </div>
     </div>
 
@@ -185,16 +189,23 @@
    
 
 <script>
+    window.onload = function(){
+        stopLoading();
+        setTimeout(() => {
+            document.getElementById("submit-btn-tab").style.display = "block"; 
+        }, 2000);
+    }
+
     let privacyDesTab = document.getElementById("privacy-description");
     let privacy = document.getElementById("privacy");
     
     privacy.addEventListener("change", ()=>{
         if(privacy.value == "Public"){
-            privacyDesTab.innerHTML = "Public - This project can be viewed by everyone.";
+            privacyDesTab.innerHTML = `<i class="si-globe"></i> Public - This project can be viewed by everyone.`;
         }else if(privacy.value == "Private"){
-            privacyDesTab.innerHTML = "Private - This project can only be viewed by invited users. Use the link to invite.";
+            privacyDesTab.innerHTML = `<i class="si-lock"></i> Private - This project can only be viewed by invited users. Use the link to invite.`;
         }else if(privacy.value == "only-me"){
-            privacyDesTab.innerHTML = "Only me - This project will only be viewed by me.";
+            privacyDesTab.innerHTML = `<i class="si-eye-slash"></i> Only me - This project will only be viewed by me.`;
         }else{
             privacyDesTab.innerHTML = "-";
         }
@@ -204,6 +215,7 @@
     let model = document.getElementById("model");
     model.addEventListener("change", ()=>{
         let fileName = model.value;
+        console.log(fileName);
         modelBtn.innerHTML = fileName.slice(0,12) + "...";
     })
 
@@ -211,9 +223,9 @@
     let filesBtn = document.getElementById("files-btn");
 
     pictures.addEventListener("change", ()=>{
-        let imagesName = pictures.value;
+        let imagesName = [pictures.value];
         console.log(imagesName);
-        filesBtn.innerHTML = imagesName.slice(0,12) + "...";
+        document.getElementById("images-text").innerHTML = "Images added...";
     })
 
 

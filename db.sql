@@ -56,7 +56,25 @@ CREATE TABLE `projects` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
+CREATE TABLE `interests` (
+  `id` int(11) NOT NULL,
+  `user_id` bigint(150) NOT NULL,
+  `model_id` varchar(255) DEFAULT NULL,
+  `username` bigint(150) DEFAULT 1,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `sender` bigint(150) NOT NULL,
+  `reciever` bigint(150) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `message_type` varchar(45) NOT NULL DEFAULT 'text',
+  `seen` varchar(45) NOT NULL DEFAULT 'sent',
+  `attachment_name` varchar(255) DEFAULT NULL,
+  `date_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 
 
